@@ -22,6 +22,7 @@ class CheckSignature:
             for i, key in enumerate(parameters.keys()):
                 expected_type = parameters[key].annotation
 
+                # TODO (withtwoemms) -- handle varargs
                 try:
                     given_param = given_params[i]
                 except IndexError:
@@ -62,10 +63,14 @@ class CheckSignature:
     def __repr__(self):
         if self.func:
             return f'<CheckSignature({self.func.__name__})>'
+        else:
+            return f'<CheckSignature()>'
 
     def __str__(self):
         if self.func:
             return self.func.__name__
+        else:
+            return ''
 
 
 def checksignature(function: Callable = None):
