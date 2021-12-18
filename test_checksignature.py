@@ -5,18 +5,20 @@ from checksignature import CheckSignature
 from checksignature import checksignature
 
 
+@checksignature
+def function(a: str, b: int, c, **kwargs):
+    return a, b, c, kwargs
+
+
 class CheckSignatureTest(TestCase):
 
-    @checksignature
-    def function(a: str, b: int, c, **kwargs):
-        return a, b, c, kwargs
-
     def test_function_executes_with_compatible_signature(self):
-        self.function('one', 2, 3.0, **{'four': 4})
+        print(repr(function))
+        function('one', 2, 3.0, **{'four': 4})
 
     def test_TypeError_thrown_on_incompatible_signature(self):
         with self.assertRaises(TypeError):
-            self.function(1, 2, 3.0, **{'four': 4})
+            function(1, 2, 3.0, **{'four': 4})
 
     def test_can_handle_signature_with_Union(self):
 
@@ -58,6 +60,20 @@ class CheckSignatureTest(TestCase):
             pass
 
         function()
+
+    def test_can_handle_varargs(self):
+
+        @checksignature
+        def function(*a: int):
+            return a
+
+        function(1, 2, 3)  # should not raise
+
+        with self.assertRaises(TypeError):
+            function(1, 'two', 3.0)
+
+        with self.assertRaises(TypeError):
+            function(1, 2, 3.0)
 
     def test_functionless_CheckSignature_evalutation(self):
         CheckSignature().evaluate() == None
