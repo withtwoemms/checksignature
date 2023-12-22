@@ -24,6 +24,9 @@ class CheckSignature:
         parameters = signature(self.func).parameters
         parameters_names = tuple(parameters.keys())
 
+        if not len(parameters_names):
+            return None
+
         i = 0
         while i <= len(parameters_names):
             parameter_name = parameters_names[i]
