@@ -13,7 +13,6 @@ def function(a: str, b: int, c, **kwargs):
 class CheckSignatureTest(TestCase):
 
     def test_function_executes_with_compatible_signature(self):
-        print(repr(function))
         function('one', 2, 3.0, **{'four': 4})
 
     def test_TypeError_thrown_on_incompatible_signature(self):
@@ -87,7 +86,7 @@ class CheckSignatureTest(TestCase):
         def function():
             pass
 
-        str(function)           == 'function'
+        str(function)         == 'function'
         str(CheckSignature()) == ''
 
     def test_CheckSignature__repr__(self):
@@ -96,6 +95,6 @@ class CheckSignatureTest(TestCase):
         def function(a):
             return a
 
-        repr(function)      == '<CheckSignature(function)>'
+        repr(function)         == '<CheckSignature(function)>'
         repr(CheckSignature()) == '<CheckSignature()>'
 
