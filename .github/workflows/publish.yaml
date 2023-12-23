@@ -36,7 +36,7 @@ jobs:
           python-version: 3.12
 
       - name: Install dependencies
-        run: pip install nox
+        run: pip install -r requirements.txt
 
       - name: Build distribution 📦
         run: PYTHONWARNINGS=ignore LOCAL_VERSION_SCHEME=true nox -s build
