@@ -1,28 +1,17 @@
 name: publish
 
 on:
+  workflow_run:
+    workflows:
+      - tests
+    types:
+      - completed
   push:
     branches: [main]
     tags: ['*']
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up latest Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
-
-      - name: Provision virtual environment and run tests
-        run: pip install nox -r requirements.txt && nox -s test
-
-
   publish:
-    needs: check
     runs-on: ubuntu-latest
 
     steps:
