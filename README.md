@@ -6,11 +6,11 @@
 [![codecov](https://codecov.io/gh/withtwoemms/checksignature/branch/main/graph/badge.svg?token=95KK3WG5QW)](https://codecov.io/gh/withtwoemms/checksignature)
 
 # Setup
-Ensure `nox` is installed.
+Install build dependencies.
 ```
-pip install nox
+pip install -r requirements
 ```
-Run `nox` to build, install, and run `checksignature` tests.
+Run [`nox`](https://nox.thea.codes/en/stable/) to build, install, and run `checksignature` tests.
 
 # Usage
 
