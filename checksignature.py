@@ -28,7 +28,7 @@ class CheckSignature:
             return None
 
         i = 0
-        while i <= len(parameters_names):
+        while i < len(parameters_names):
             parameter_name = parameters_names[i]
             expected_type = parameters[parameter_name].annotation
 
