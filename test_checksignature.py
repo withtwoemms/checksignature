@@ -74,6 +74,23 @@ class CheckSignatureTest(TestCase):
         with self.assertRaises(TypeError):
             function(1, 2, 3.0)
 
+    def test_can_handle_kw_varargs(self):
+
+        @checksignature
+        def function(**a: int):
+            return a
+
+        function(**{'one': 1, 'two': 2, 'three': 3})  # should not raise
+
+        with self.assertRaises(TypeError):
+            function(**{1: 'one', 'two': 2, 'three': 3})
+
+        with self.assertRaises(TypeError):
+            function(**{'one': 1, 2: 'two', 'three': 3})
+
+        with self.assertRaises(TypeError):
+            function(**{'one': 1, 'two': 2, 3: 'three'})
+
     def test_functionless_CheckSignature_evalutation(self):
         CheckSignature().evaluate() == None
 
