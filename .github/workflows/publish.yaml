@@ -18,7 +18,7 @@ jobs:
           python-version: 3.9
 
       - name: Provision virtual environment and run tests
-        run: pip install nox && nox -s checksignature
+        run: pip install nox -r requirements.txt && nox -s test
 
 
   publish:
@@ -56,4 +56,3 @@ jobs:
           user: __token__
           password: ${{ secrets.pypi_password }}
           skip_existing: true
-
