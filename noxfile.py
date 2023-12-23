@@ -11,11 +11,12 @@ USEVENV = envvar.get('USEVENV', False)
 
 external = False if USEVENV else True
 supported_python_versions = [
-    '3.6',
     '3.7',
     '3.8',
     '3.9',
     '3.10',
+    '3.11',
+    '3.12',
 ]
 
 nox.options.default_venv_backend = 'none' if not USEVENV else USEVENV
