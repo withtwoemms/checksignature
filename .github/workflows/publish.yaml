@@ -39,7 +39,7 @@ jobs:
         run: pip install nox
 
       - name: Build distribution 📦
-        run: PYTHONWARNINGS=ignore LOCAL_VERSION_SCHEME=true nox -s build-checksignature
+        run: PYTHONWARNINGS=ignore LOCAL_VERSION_SCHEME=true nox -s build
 
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@master
