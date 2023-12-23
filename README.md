@@ -6,22 +6,23 @@
 [![codecov](https://codecov.io/gh/withtwoemms/checksignature/branch/main/graph/badge.svg?token=95KK3WG5QW)](https://codecov.io/gh/withtwoemms/checksignature)
 
 # Setup
-Ensure `nox` is installed.
+Install build dependencies.
 ```
-pip install nox
+pip install -r requirements
 ```
-Run `nox` to build, install, and run `checksignature` tests.
+Run [`nox`](https://nox.thea.codes/en/stable/) to build, install, and run `checksignature` tests.
 
 # Usage
 
 Decorate any funciton with `@checksignature`.
 ```python
 @checksignature
-def function(a: str, b: int, c, **kwargs):
-    return a, b, c, kwargs
+def function(a: str, b: int, c, *args: int, **kwargs: int)::
+    return a, b, c, args, kwargs
 ```
 Upon invocation of `function`, the signature check is evaluated.
 ```python
-function('one', 2, 3.0, **{'four': 4})  #=> functions as usual--no problem.
-function(1, 2, 3.0, **{'four': 4})      #=> raises a TypeError
+function('one', 2, 3.0, 1, 2, 3, **{'four': 4})   #=> functions as usual--no problem.
+function('one', 2, 3.0, 1, 2, 3, **{'four': 4.0}) #=> raises a TypeError
+function('one', 2, 'x', 1, 2, 3, **{'four': 4})   #=> raises a TypeError
 ```

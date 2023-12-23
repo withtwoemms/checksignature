@@ -8,7 +8,7 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9, '3.10']
+        python-version: [3.7, 3.8, 3.9, '3.10', '3.11', '3.12']
 
     steps:
       - uses: actions/checkout@v1
@@ -19,10 +19,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install nox
-        run: pip install nox
+        run: pip install nox -r requirements.txt
 
       - name: Provision virtual environment and run tests
-        run: nox -s checksignature
+        run: nox -s test
 
       - name: Upload coverage
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
