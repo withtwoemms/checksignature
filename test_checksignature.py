@@ -91,6 +91,28 @@ class CheckSignatureTest(TestCase):
         with self.assertRaises(TypeError):
             function(**{'one': 1, 'two': 2, 3: 'three'})
 
+    def test_altogether_now(self):
+
+        @checksignature
+        def function(a: str, b: int, c, *args: int, **kwargs: Union[int, float]):
+            return a, b, c, args, kwargs
+
+        function('one', 2, 3.0, 10, 20, 30, **{'four': 4, 'five': 5})    # should not raise
+        function('one', 2, 3.0, 10, 20, 30, **{'four': 4, 'five': 5.0})  # should not raise
+        function('one', 2, 'x', 10, 20, 30, **{'four': 4, 'five': 5})    # should not raise
+
+        with self.assertRaises(TypeError):
+            function(1, 2, 3.0, 10, 20, 30, **{'four': 4, 'five': 5})
+
+        with self.assertRaises(TypeError):
+            function('one', 'x', 3.0, 10, 20, 30, **{'four': 4, 'five': 5})
+
+        with self.assertRaises(TypeError):
+            function('one', 2, 3.0, 'x', 20, 30, **{'four': 4, 'five': 5})
+
+        with self.assertRaises(TypeError):
+            function('one', 2, 3.0, 10, 20, 30, **{'four': 'x', 'five': 5})
+
     def test_functionless_CheckSignature_evalutation(self):
         CheckSignature().evaluate() == None
 
