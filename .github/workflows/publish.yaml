@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python 3.9
+      - name: Set up latest Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.12
 
       - name: Provision virtual environment and run tests
         run: pip install nox -r requirements.txt && nox -s test
@@ -30,10 +30,10 @@ jobs:
         with:
           fetch-depth: 0 # NOTE: fetches all history for all branches and tags
 
-      - name: Set up Python 3.9
+      - name: Set up latest Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.12
 
       - name: Install dependencies
         run: pip install nox
