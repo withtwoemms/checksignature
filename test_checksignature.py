@@ -19,6 +19,20 @@ class CheckSignatureTest(TestCase):
         with self.assertRaises(TypeError):
             function(1, 2, 3.0, **{'four': 4})
 
+    def test_class_method_decoration(self):
+
+        class SomeClass:
+            @checksignature
+            def method(self, *args: str, **kwargs: int):
+                return args, kwargs
+
+        expected_args = ('one', '1',)
+        expected_kwargs = {'three': 3}
+
+        result = SomeClass().method(*expected_args, **expected_kwargs)
+
+        self.assertEqual(result, (expected_args, expected_kwargs))
+
     def test_can_handle_signature_with_Union(self):
 
         @checksignature

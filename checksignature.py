@@ -1,4 +1,5 @@
 from collections import OrderedDict as odict
+from functools import partial
 from inspect import _empty as NoTypeInfo
 from inspect import _ParameterKind as ParameterKind
 from inspect import signature
@@ -31,7 +32,6 @@ class CheckSignature:
         while i < len(parameters_names):
             parameter_name = parameters_names[i]
             expected_type = parameters[parameter_name].annotation
-
             try:
                 if parameters[parameter_name].kind == ParameterKind.VAR_POSITIONAL:
                     for j in range(len(given_params)):
@@ -67,6 +67,9 @@ class CheckSignature:
         else:
             return ''
 
+    def __get__(self, instance, owner):
+        return partial(self, instance)
+
 
 def check_type(param_value, param_name, expected_type):
     given_param_type = type(param_value)
@@ -99,5 +102,3 @@ def check_type(param_value, param_name, expected_type):
 
 def checksignature(function: Callable = None):
     return CheckSignature(function)
-
-
